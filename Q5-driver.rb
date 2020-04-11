@@ -104,4 +104,4 @@ newInventory.each do |sub_array|
   sub_array.each do |item|
     puts item
   end
-  end
+end
