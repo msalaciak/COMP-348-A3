@@ -76,7 +76,7 @@ class AutoInventoryDriver
 
     i = 0
     @manufacturers.each do |cars|
-      cars.createModel(@models[i],@trim[i],@km[i],@year[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
+      cars.createModel(@models[i],@trim[i],@km[i],@year[i],@type[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
       i +=1
     end
 
@@ -180,7 +180,7 @@ class AutoInventoryDriver
 
     i = 0
     @manufacturers.each do |cars|
-      cars.createModel(@models[i],@trim[i],@km[i],@year[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
+      cars.createModel(@models[i],@trim[i],@km[i],@type[i],@year[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
       i +=1
     end
 
@@ -206,7 +206,7 @@ end
 ##test functions
 showroom = AutoInventoryDriver.new
 
-showroom.convertListings2Catalougue("inventory-test.txt")
+showroom.convertListings2Catalougue("inventory.txt")
 
 
 # showroom.printCar()
@@ -217,7 +217,6 @@ showroom.convertListings2Catalougue("inventory-test.txt")
 
 # showroom.add2Inventory("coupe,100km,auto,RWD, Lexus,CLK,LX ,18F724A,2015,{AC, Heated Seats, Heated Mirrors, Keyless Entry, Power seats},6L/100km,Used")
 
-# showroom.printCar()
 
-# showroom.saveCatalogue2File()
+showroom.saveCatalogue2File()
 

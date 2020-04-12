@@ -1,19 +1,19 @@
 
 class CarMaker
-
+  @@counter = 0
   attr_accessor :car_maker, :listing
   attr_writer :listing
 
   def initialize(maker)
 
     self.car_maker = maker
-
+    @@counter += 1
 
   end
 
 
-  def createModel(model, trim, km, year, driveTrain, trans, id, status, fuel, features)
-    @carModel = CarModel.new(model, trim, km, year, driveTrain, trans, id, status, fuel, features)
+  def createModel(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
+    @carModel = CarModel.new(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
 
   end
 
@@ -37,14 +37,15 @@ end
 class CarModel < CarMaker
 
 
-  attr_accessor :model, :trim, :km, :year ,:driveTrain ,:trans,:id,:status,:fuel,:features
-  attr_writer :model, :trim, :km, :year ,:driveTrain ,:trans,:id,:status,:fuel,:features
+  attr_accessor :model, :trim, :km, :year ,:type ,:driveTrain ,:trans,:id,:status,:fuel,:features
+  attr_writer :model, :trim, :km, :year ,:type,:driveTrain ,:trans,:id,:status,:fuel,:features
 
-  def initialize(model, trim, km, year, driveTrain, trans, id, status, fuel, features)
+  def initialize(model, trim, km, year, type, driveTrain, trans, id, status, fuel, features)
     self.model = model
     self.trim = trim
     self.km = km
     self.year = year
+    self.type = type;
     self.driveTrain = driveTrain
     self.trans = trans
     self.id = id
@@ -56,7 +57,7 @@ class CarModel < CarMaker
 
   def print()
 
-    self.model + "," + self.trim + "," + self.km + "," + self.year + "," + self.driveTrain +
+    self.model + "," + self.trim + "," + self.km + "," + self.year + "," + self.type + "," + self.driveTrain +
              "," + self.trans + "," + self.id + "," + self.status + "," + self.fuel + "," + self.features
 
 
