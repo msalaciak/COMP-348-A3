@@ -1,9 +1,8 @@
 require './CarMaker.rb'
 
 class AutoInventoryDriver
-  @@inventory =0
-  @@inventoryFilePath =0
-
+  @@inventory = 0
+  @@inventoryFilePath = 0
 
   def convertListings2Catalougue(inventoryFile)
     if not File.exist?(inventoryFile) or File.zero?(inventoryFile)
@@ -16,7 +15,7 @@ class AutoInventoryDriver
 
 # all the regex patterns to parse the auto inventory textfile
 # features
-    @featuresRegex =  /\{.*\}/i
+    @featuresRegex = /\{.*\}/i
 #km
     @kmRegex = /(?<=\A|,)\d*km/i
 #drive train
@@ -26,9 +25,9 @@ class AutoInventoryDriver
 #transmission
     @transmissionRegex = /\b(?:auto|manual|steptronic)\b/i
 #status
-    @statusRegex =  /\b(?:used|new)\b/i
+    @statusRegex = /\b(?:used|new)\b/i
 #carMarker
-    @carmakerRegex =  /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
+    @carmakerRegex = /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
 #trim
     @trimRegex = /,(\D{2})\W/i
 #fuel economy
@@ -54,33 +53,28 @@ class AutoInventoryDriver
     @stockNumber = @@inventory.scan(@stockRegex)
 
 #combine all arrays into one so we can find what has not be found using regex --> this will be the car models
-    @everything =  @features +  @km +  @driveTrain +  @type +
-        @transmission +  @status +  @carMaker +  @trim +  @fuelEcom +  @year +  @stockNumber
+    @everything = @features + @km + @driveTrain + @type +
+        @transmission + @status + @carMaker + @trim + @fuelEcom + @year + @stockNumber
 
 #do a union between the text file string and everything found using regex to find the remaining models
-    @missing = @@inventory.gsub(Regexp.union(@everything),'')
+    @missing = @@inventory.gsub(Regexp.union(@everything), '')
 #regex to remove unwanted symbols from car models
-    @models =  @missing.scan(@modelRegex)
+    @models = @missing.scan(@modelRegex)
 
-    #create car_maker objects here
-
+#create car_maker objects here
 
     @manufacturers = @carMaker.map {
         |makers|
       CarMaker.new(makers)
     }
 
-
-
 #for every maker, we create a carModel object that is a sub-class of CarMaker
 
     i = 0
     @manufacturers.each do |cars|
-      cars.createModel(@models[i],@trim[i],@km[i],@year[i],@type[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
-      i +=1
+      cars.createModel(@models[i], @trim[i], @km[i], @year[i], @type[i], @driveTrain[i], @transmission[i], @stockNumber[i], @status[i], @fuelEcom[i], @features[i])
+      i += 1
     end
-
-
 
   end
 
@@ -88,25 +82,6 @@ class AutoInventoryDriver
     @manufacturers.each do |cars|
       cars.print()
 
-    end
-  end
-
-
-  #Search inventory method
-
-  def searchInventory(options ={} )
-    @options = { "Honda" => "Honda", "Toyota" => "Toyota", "Mercedes" => "Mercedes" ,  "BMW" => "BMW", "Lexus" => "Lexus"}
-    car_maker = options.fetch(:car_maker, 'default')
-
-    count =0
-    @manufacturers.each do |cars|
-      if(cars.car_maker == car_maker)
-        cars.print()
-        count += 1
-      end
-    end
-    if(count == 0)
-      puts "Sorry we do not have any " + car_maker + " in stock..."
     end
   end
 
@@ -118,33 +93,32 @@ class AutoInventoryDriver
       f.puts inventoryInput
     }
 
-
     # features
-    @featuresRegex =  /\{.*\}/i
-#km
+    @featuresRegex = /\{.*\}/i
+    #km
     @kmRegex = /(?<=\A|,)\d*km/i
-#drive train
+    #drive train
     @driveTrainRegex = /\b(?:awd|fwd|rwd)\b/i
-#car type
+    #car type
     @typeRegex = /\b(?:sedan|coupe|hatchback|station|suv)\b/i
-#transmission
+    #transmission
     @transmissionRegex = /\b(?:auto|manual|steptronic)\b/i
-#status
-    @statusRegex =  /\b(?:used|new)\b/i
-#carMarker
-    @carmakerRegex =  /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
-#trim
+    #status
+    @statusRegex = /\b(?:used|new)\b/i
+    #carMarker
+    @carmakerRegex = /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
+    #trim
     @trimRegex = /,(\D{2})\W/i
-#fuel economy
+    #fuel economy
     @fuelEcomRegex = /\d*\.?\dl\/100km/i
-#year
+    #year
     @yearRegex = /,(\d{4})\W/i
-#stock
+    #stock
     @stockRegex = /\b(?!km)\b\d+[a-z0-9]+\d+[0-9a-z]+(?<!km)\w\b(?<!km)\b/i
-#model
+    #model
     @modelRegex = /\b(?!,).*(?<!,)\b/
 
-#applies the regex patterns for each group and prints
+    #applies the regex patterns for each group and prints
     @features = inventoryInput.scan(@featuresRegex)
     @km = inventoryInput.scan(@kmRegex)
     @driveTrain = inventoryInput.scan(@driveTrainRegex)
@@ -157,33 +131,29 @@ class AutoInventoryDriver
     @year = inventoryInput.scan(@yearRegex).flatten
     @stockNumber = inventoryInput.scan(@stockRegex)
 
-#combine all arrays into one so we can find what has not be found using regex --> this will be the car models
-    @everything =  @features +  @km +  @driveTrain +  @type +
-        @transmission +  @status +  @carMaker +  @trim +  @fuelEcom +  @year +  @stockNumber
+    #combine all arrays into one so we can find what has not be found using regex --> this will be the car models
+    @everything = @features + @km + @driveTrain + @type +
+        @transmission + @status + @carMaker + @trim + @fuelEcom + @year + @stockNumber
 
-#do a union between the text file string and everything found using regex to find the remaining models
-    @missing = inventoryInput.gsub(Regexp.union(@everything),'')
-#regex to remove unwanted symbols from car models
-    @models =  @missing.scan(@modelRegex)
+    #do a union between the text file string and everything found using regex to find the remaining models
+    @missing = inventoryInput.gsub(Regexp.union(@everything), '')
+    #regex to remove unwanted symbols from car models
+    @models = @missing.scan(@modelRegex)
 
-#create car_maker objects here
-
+    #create car_maker objects here
 
     @manufacturers = @carMaker.map {
         |makers|
       CarMaker.new(makers)
     }
 
-
-
-#for every maker, we create a carModel object that is a sub-class of CarMaker
+    #for every maker, we create a carModel object that is a sub-class of CarMaker
 
     i = 0
     @manufacturers.each do |cars|
-      cars.createModel(@models[i],@trim[i],@km[i],@type[i],@year[i],@driveTrain[i],@transmission[i], @stockNumber[i],@status[i],@fuelEcom[i],@features[i])
-      i +=1
+      cars.createModel(@models[i], @trim[i], @km[i], @type[i], @year[i], @driveTrain[i], @transmission[i], @stockNumber[i], @status[i], @fuelEcom[i], @features[i])
+      i += 1
     end
-
 
   end
 
@@ -200,6 +170,82 @@ class AutoInventoryDriver
     write.close
   end
 
+  #Search inventory method
+  #
+  def searchInventory(options = {})
+    # @options = { "Honda" => "Honda", "Toyota" => "Toyota", "Mercedes" => "Mercedes" ,  "BMW" => "BMW", "Lexus" => "Lexus"}
+    car_maker = options.fetch(:car_maker, 'BAD ENTRY')
+    car_model = options.fetch(:car_model, 'BAD ENTRY')
+    car_trim = options.fetch(:car_trim, 'BAD ENTRY')
+    car_status = options.fetch(:car_status, 'BAD ENTRY')
+    car_transmission = options.fetch(:car_transmission, 'BAD ENTRY')
+    car_drive_train = options.fetch(:car_drive_train, 'BAD ENTRY')
+    car_type = options.fetch(:car_type, 'BAD ENTRY')
+    car_ID = options.fetch(:car_ID, 'BAD ENTRY')
+    car_year = options.fetch(:car_year, 'BAD ENTRY')
+
+
+    count = 0
+    @manufacturers.each do |cars|
+      if (cars.car_maker == car_maker)
+        cars.print()
+
+        count += 1
+      else
+        if (cars.model == car_model)
+          cars.print()
+
+          count += 1
+        else
+          if (cars.trim == car_trim)
+            cars.print()
+            count += 1
+
+          else
+            if (cars.status == car_status)
+              cars.print()
+              count += 1
+
+            else
+              if (cars.trans == car_transmission)
+                cars.print()
+                count += 1
+
+              else
+                if (cars.driveTrain == car_drive_train)
+                  cars.print()
+                  count += 1
+
+                else
+                  if (cars.type == car_type)
+                    cars.print()
+                    count += 1
+
+                  else
+                    if (cars.id == car_ID)
+                      cars.print()
+                      count += 1
+
+                    else
+                      if (cars.year == car_year)
+                        cars.print()
+                        count += 1
+
+
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    if (count == 0)
+      puts "Sorry we do not have any in stock..."
+    end
+  end
 
 end
 
@@ -208,15 +254,16 @@ showroom = AutoInventoryDriver.new
 
 showroom.convertListings2Catalougue("inventory.txt")
 
-
 # showroom.printCar()
 
 # showroom.searchInventory(car_maker: 'Honda')
-
-# showroom.searchInventory(({"car_maker" => "Honda"}))
-
+# showroom.searchInventory(car_model: 'CRV')
+# showroom.searchInventory(car_trim: 'LX')
+# showroom.searchInventory(car_year: '2017')
+# showroom.searchInventory(car_status: 'a')
+# showroom.searchInventory(car_drive_train: 'AWD')
+showroom.searchInventory(car_transmission: 'auto')
 # showroom.add2Inventory("coupe,100km,auto,RWD, Lexus,CLK,LX ,18F724A,2015,{AC, Heated Seats, Heated Mirrors, Keyless Entry, Power seats},6L/100km,Used")
 
-
-showroom.saveCatalogue2File()
+# showroom.saveCatalogue2File()
 

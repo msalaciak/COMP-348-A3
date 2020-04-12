@@ -1,19 +1,33 @@
 
 class CarMaker
   @@counter = 0
-  attr_accessor :car_maker, :listing
-  attr_writer :listing
+  attr_accessor :car_maker, :listing , :model, :trim, :km, :year ,:type ,:driveTrain ,:trans,:id,:status,:fuel,:features
+  attr_writer :listing, :model, :trim, :km, :year ,:type,:driveTrain ,:trans,:id,:status,:fuel,:features
 
   def initialize(maker)
 
     self.car_maker = maker
     @@counter += 1
 
+
   end
 
 
   def createModel(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
     @carModel = CarModel.new(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
+    self.model = model
+    self.trim = trim
+    self.km = km
+    self.year = year
+    self.type = type
+    self.driveTrain = driveTrain
+    self.trans = trans
+    self.id = id
+    self.status = status
+    self.fuel = fuel
+    self.features = features
+
+
 
   end
 
@@ -45,7 +59,7 @@ class CarModel < CarMaker
     self.trim = trim
     self.km = km
     self.year = year
-    self.type = type;
+    self.type = type
     self.driveTrain = driveTrain
     self.trans = trans
     self.id = id
