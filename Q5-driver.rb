@@ -14,87 +14,87 @@ def inventoryParser(textFile)
 
 # all the regex patterns to parse the auto inventory textfile
 # features
-  @featuresRegex =  /\{.*\}/i
+  $featuresRegex =  /\{.*\}/i
 #km
-  @kmRegex = /(?<=\A|,)\d*km/i
+  $kmRegex = /(?<=\A|,)\d*km/i
 #drive train
-  @driveTrainRegex = /\b(?:awd|fwd|rwd)\b/i
+  $driveTrainRegex = /\b(?:awd|fwd|rwd)\b/i
 #car type
-  @typeRegex = /\b(?:sedan|coupe|hatchback|station|suv)\b/i
+  $typeRegex = /\b(?:sedan|coupe|hatchback|station|suv)\b/i
 #transmission
-  @transmissionRegex = /\b(?:auto|manual|steptronic)\b/i
+  $transmissionRegex = /\b(?:auto|manual|steptronic)\b/i
 
 #status
-  @statusRegex =  /\b(?:used|new)\b/i
+  $statusRegex =  /\b(?:used|new)\b/i
 
 #carMarker
-  @carmakerRegex =  /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
+  $carmakerRegex =  /\b(?:honda|toyota|mercedes|bmw|lexus)\b/i
 
 #trim
-  @trimRegex = /,(\D{2})\W/i
+  $trimRegex = /,(\D{2})\W/i
 
 #fuel economy
-  @fuelEcomRegex = /\d*\.?\dl\/100km/i
+  $fuelEcomRegex = /\d*\.?\dl\/100km/i
 
 #year
-  @yearRegex = /,(\d{4})\W/i
+  $yearRegex = /,(\d{4})\W/i
 
 #stock
-  @stockRegex = /\b(?!km)\b\d+[a-z0-9]+\d+[0-9a-z]+(?<!km)\w\b(?<!km)\b/i
+  $stockRegex = /\b(?!km)\b\d+[a-z0-9]+\d+[0-9a-z]+(?<!km)\w\b(?<!km)\b/i
 
 #model
-  @modelRegex = /\b(?!,).*(?<!,)\b/
+  $modelRegex = /\b(?!,).*(?<!,)\b/
 
 #applies the regex patterns for each group and prints
 #
-  @features = inventory.scan(@featuresRegex)
-  puts "#{ @features}"
+  $features = inventory.scan($featuresRegex)
+  puts "#{ $features}"
 
-  @km = inventory.scan(@kmRegex)
-  puts "#{ @km}"
+  $km = inventory.scan($kmRegex)
+  puts "#{ $km}"
 
-  @driveTrain = inventory.scan(@driveTrainRegex)
-  puts "#{ @driveTrain}"
+  $driveTrain = inventory.scan($driveTrainRegex)
+  puts "#{ $driveTrain}"
 
-  @type = inventory.scan(@typeRegex)
-  puts "#{ @type}"
+  $type = inventory.scan($typeRegex)
+  puts "#{ $type}"
 
-  @transmission = inventory.scan(@transmissionRegex)
-  puts "#{ @transmission}"
+  $transmission = inventory.scan($transmissionRegex)
+  puts "#{ $transmission}"
 
-  @status = inventory.scan(@statusRegex)
-  puts "#{ @status}"
+  $status = inventory.scan($statusRegex)
+  puts "#{ $status}"
 
-  @carMaker = inventory.scan(@carmakerRegex)
-  puts "#{ @carMaker}"
+  $carMaker = inventory.scan($carmakerRegex)
+  puts "#{ $carMaker}"
 
-  @trim = inventory.scan(@trimRegex).flatten
-  puts "# @{trim}"
+  $trim = inventory.scan($trimRegex).flatten
+  puts "# ${trim}"
 
-  @fuelEcom = inventory.scan(@fuelEcomRegex)
-  puts "#{ @fuelEcom}"
+  $fuelEcom = inventory.scan($fuelEcomRegex)
+  puts "#{ $fuelEcom}"
 
-  @year = inventory.scan(@yearRegex).flatten
-  puts "#{ @year}"
+  $year = inventory.scan($yearRegex).flatten
+  puts "#{ $year}"
 
-  @stockNumber = inventory.scan(@stockRegex)
+  $stockNumber = inventory.scan($stockRegex)
 
-  puts "#{ @stockNumber}"
+  puts "#{ $stockNumber}"
 
-  @everything =  @features +  @km +  @driveTrain +  @type +
-      @transmission +  @status +  @carMaker +  @trim +  @fuelEcom +  @year +  @stockNumber
+  $everything =  $features +  $km +  $driveTrain +  $type +
+      $transmission +  $status +  $carMaker +  $trim +  $fuelEcom +  $year +  $stockNumber
 
-  @missing = inventory.gsub(Regexp.union(@everything),'')
+  $missing = inventory.gsub(Regexp.union($everything),'')
 
-  @models =  @missing.scan(@modelRegex)
+  $models =  $missing.scan($modelRegex)
 
-  puts  "#{@models}"
+  puts  "#{$models}"
 
-  @organizedInventory = []
-  @organizedInventory.push(@features)
-  @organizedInventory.push(@km)
+  $organizedInventory = []
+  $organizedInventory.push($features)
+  $organizedInventory.push($km)
 
-  return @organizedInventory
+  return $organizedInventory
 end
 
 newInventory = inventoryParser("inventory.txt")
