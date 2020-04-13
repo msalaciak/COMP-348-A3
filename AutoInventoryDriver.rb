@@ -225,13 +225,10 @@ class AutoInventoryDriver
                     if (cars.id == car_ID)
                       cars.print()
                       count += 1
-
                     else
                       if (cars.year == car_year)
                         cars.print()
                         count += 1
-
-
                       end
                     end
                   end

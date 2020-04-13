@@ -1,8 +1,7 @@
-
 class CarMaker
   @@counter = 0
-  attr_accessor :car_maker, :listing , :model, :trim, :km, :year ,:type ,:driveTrain ,:trans,:id,:status,:fuel,:features
-  attr_writer :listing, :model, :trim, :km, :year ,:type,:driveTrain ,:trans,:id,:status,:fuel,:features
+  attr_accessor :car_maker, :listing, :model, :trim, :km, :year, :type, :driveTrain, :trans, :id, :status, :fuel, :features
+  attr_writer :listing, :model, :trim, :km, :year, :type, :driveTrain, :trans, :id, :status, :fuel, :features
 
   def initialize(maker)
 
@@ -13,8 +12,8 @@ class CarMaker
   end
 
 
-  def createModel(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
-    @carModel = CarModel.new(model, trim, km, year,type, driveTrain, trans, id, status, fuel, features)
+  def createModel(model, trim, km, year, type, driveTrain, trans, id, status, fuel, features)
+    @carModel = CarModel.new(model, trim, km, year, type, driveTrain, trans, id, status, fuel, features)
     self.model = model
     self.trim = trim
     self.km = km
@@ -26,7 +25,6 @@ class CarMaker
     self.status = status
     self.fuel = fuel
     self.features = features
-
 
 
   end
@@ -43,7 +41,6 @@ class CarMaker
   end
 
 
-
 end
 
 ### CarModel class
@@ -51,8 +48,8 @@ end
 class CarModel < CarMaker
 
 
-  attr_accessor :model, :trim, :km, :year ,:type ,:driveTrain ,:trans,:id,:status,:fuel,:features
-  attr_writer :model, :trim, :km, :year ,:type,:driveTrain ,:trans,:id,:status,:fuel,:features
+  attr_accessor :model, :trim, :km, :year, :type, :driveTrain, :trans, :id, :status, :fuel, :features
+  attr_writer :model, :trim, :km, :year, :type, :driveTrain, :trans, :id, :status, :fuel, :features
 
   def initialize(model, trim, km, year, type, driveTrain, trans, id, status, fuel, features)
     self.model = model
@@ -72,11 +69,10 @@ class CarModel < CarMaker
   def print()
 
     self.model + "," + self.trim + "," + self.km + "," + self.year + "," + self.type + "," + self.driveTrain +
-             "," + self.trans + "," + self.id + "," + self.status + "," + self.fuel + "," + self.features
+        "," + self.trans + "," + self.id + "," + self.status + "," + self.fuel + "," + self.features
 
 
   end
-
 
 
 end
