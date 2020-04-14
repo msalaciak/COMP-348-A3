@@ -10,6 +10,7 @@
 # I currently input a hash but I use different syntax than searchInventory( {“car_maker” => ”Mercedes”})
 # I use showroom.searchInventory(car_year: '2017') instead. She said this is fine as long as it does the required output
 # Reason for this is the textbook i used explained it this way which I followed to teach myself
+# # used Regular Expressions Cookbook 2nd edition and www.regex101.com for inspiriaton and help for regex
 
 require './CarMaker.rb'
 
